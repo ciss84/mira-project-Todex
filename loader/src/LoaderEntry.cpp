@@ -501,7 +501,7 @@ goto network;
 		char buf[64];
 		memset(buf, 0, sizeof(buf));
 
-		snprintf(buf, sizeof(buf), "Mira 5.05 Injected By Mugiwara elf: %p elfSize: %llx", buffer, currentSize);
+		snprintf(buf, sizeof(buf), "Mira 6.72 Injected By Mugiwara elf: %p elfSize: %llx", buffer, currentSize);
 		WriteNotificationLog(buf);
 
 		uint8_t isLaunchingKernel = true;
