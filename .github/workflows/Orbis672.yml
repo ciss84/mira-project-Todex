@@ -23,9 +23,9 @@ jobs:
       - name: clean loader
         run: cd loader; make clean
       - name: create mira directories
-        run: make create
+        run: cd kernel; make create
       - name: clean mira
-        run: make clean
+        run: cd kernel; make clea
         # 6.72 Support
       - name: make 6.72 loader
         run: cd loader; MIRA_PLATFORM=MIRA_PLATFORM_ORBIS_BSD_672 MIRA_CHECKS=TRUE make
