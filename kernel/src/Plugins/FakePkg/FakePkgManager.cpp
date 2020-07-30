@@ -280,12 +280,12 @@ bool FakePkgManager::ShellCorePatch()
         return false;
     }
 	  
-    /*s_Ret = Utilities::ProcessReadWriteMemory(s_Process, (void*)(s_TextStart + ssc_enable_data_mount_patch), 5, (void*)"\x31\xC0\xFF\xC0\x90", nullptr, true);
+    s_Ret = Utilities::ProcessReadWriteMemory(s_Process, (void*)(s_TextStart + ssc_enable_debug_patch), 1, (void*)"\x82", nullptr, true);
     if (s_Ret < 0)
     {
-        WriteLog(LL_Error, "ssc_enable_data_mount_patch");
+        WriteLog(LL_Error, "ssc_enable_debug_patch");
         return false;
-    }*/
+    }
     
     s_Ret = Utilities::ProcessReadWriteMemory(s_Process, (void*)(s_TextStart + ssc_external_hdd_pkg_installer_patch), 1, (void*)"\x00", nullptr, true);
     if (s_Ret < 0)

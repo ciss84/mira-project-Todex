@@ -19,8 +19,6 @@ preload_prx_hook:
 	push r9
 
 	; Call the preload module function
-	mov rax, qword [sceSysmodulePreloadModuleForLibkernel]
-	call rax
 	mov r9, qword [sceSysmodulePreloadModuleForLibkernel]
 	call r9
 

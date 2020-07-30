@@ -312,7 +312,7 @@
 
 // SceShellCore patches - enable fakepkg
 #define ssc_enable_fakepkg_patch                           0x003EFCF0
-
+#define ssc_enable_debug_patch                             0x01BD800D
 // SceShellCore patches - enable data mount
 /*#define ssc_enable_data_mount_patch                        0x00319EAB*/
 

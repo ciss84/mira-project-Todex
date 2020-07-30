@@ -13,6 +13,7 @@
 #include <Plugins/BrowserActivator/BrowserActivator.hpp>
 #include <Plugins/MorpheusEnabler/MorpheusEnabler.hpp>
 #include <Plugins/SyscallGuard/SyscallGuardPlugin.hpp>
+#include <Plugins/TTYRedirector/TTYRedirector.hpp>
 
 // Utility functions
 #include <Utils/Logger.hpp>
@@ -148,7 +149,15 @@ bool PluginManager::OnLoad()
             s_Success = false;
             break;
         }
-
+        
+        // Initialize TTYRedirector
+        m_TTYRedirector = new Mira::Plugins::TTYRedirector();
+        if (m_TTYRedirector == nullptr)
+        {
+            WriteLog(LL_Error, "could not allocate tty redirector.");
+            s_Success = false;
+            break;
+        }
     } while (false);
 
     if (m_Debugger)
@@ -193,6 +202,12 @@ bool PluginManager::OnLoad()
             WriteLog(LL_Error, "could not load morpheus enabler.");
     }
 
+    if (m_TTYRedirector)
+    {
+        if (!m_TTYRedirector->OnLoad())
+            WriteLog(LL_Error, "could not load tty redirector.");
+    }
+    
     return s_Success;
 }
 
@@ -352,6 +367,18 @@ bool PluginManager::OnUnload()
         m_Debugger = nullptr;
     }
 
+    // Unload TTY Redirector
+    if (m_TTYRedirector)
+    {
+        WriteLog(LL_Debug, "unloading tty redirector");
+        if (!m_TTYRedirector->OnUnload())
+            WriteLog(LL_Error, "tty redirector could not unload");
+
+        // Free TTYRedirector
+        delete m_TTYRedirector;
+        m_TTYRedirector = nullptr;
+    }
+    
     WriteLog(LL_Debug, "All Plugins Unloaded %s.", s_AllUnloadSuccess ? "successfully" : "un-successfully");
     return s_AllUnloadSuccess;
 }
@@ -434,6 +461,13 @@ bool PluginManager::OnSuspend()
             WriteLog(LL_Error, "debugger suspend failed");
     }
 
+    // Suspend TTYRedirector (does nothing)
+    if (m_TTYRedirector)
+    {
+        if (!m_TTYRedirector->OnSuspend())
+            WriteLog(LL_Error, "tty redirector suspend failed");
+    }
+    
     // Return final status
     return s_AllSuccess;
 }
@@ -487,6 +521,13 @@ bool PluginManager::OnResume()
             WriteLog(LL_Error, "morpheus enabler resume failed");
     }
 
+    WriteLog(LL_Debug, "resuming tty redirector");
+    if (m_TTYRedirector)
+    {
+        if (!m_TTYRedirector->OnResume())
+            WriteLog(LL_Error, "tty redirector resume failed");
+    }
+    
     // Iterate through all of the plugins
     for (auto i = 0; i < m_Plugins.size(); ++i)
     {

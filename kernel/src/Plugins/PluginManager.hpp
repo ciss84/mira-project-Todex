@@ -35,7 +35,8 @@ namespace Mira
             Mira::Utils::IModule* m_Substitute;
             Mira::Utils::IModule* m_BrowserActivator;
             Mira::Utils::IModule* m_MorpheusEnabler;            
-            Mira::Utils::IModule* m_SyscallGuard;            
+            Mira::Utils::IModule* m_SyscallGuard;
+            Mira::Utils::IModule* m_TTYRedirector;            
 
         public:
             Mira::Utils::IModule* GetDebugger() { return m_Debugger; }
