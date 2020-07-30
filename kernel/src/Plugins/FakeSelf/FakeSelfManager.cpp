@@ -22,6 +22,7 @@
 extern "C"
 {
     #include <sys/sysent.h>
+    //#include <sys/types.h>
 };
 
 using namespace Mira::Plugins;
@@ -454,7 +455,7 @@ int FakeSelfManager::SceSblAuthMgrSmLoadSelfBlock_Mailbox(uint32_t p_ServiceId, 
 {
     uint8_t* frame = (uint8_t*)__builtin_frame_address(1);
 	  SelfContext* p_Context = *(SelfContext**)(frame - 0x08);
-
+	
     auto sceSblServiceMailbox = (int(*)(uint32_t p_ServiceId, void* p_Request, void* p_Response))kdlsym(sceSblServiceMailbox);
     
     bool s_IsUnsigned = p_Context && (p_Context->format == SelfFormat::Elf || IsFakeSelf((SelfContext*)p_Context));

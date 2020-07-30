@@ -34,7 +34,7 @@ namespace Mira
 
             static const uint8_t g_RifDebugKey[0x10];
             static const uint8_t g_FakeKeySeed[0x10];
-            
+
         public:
             FakePkgManager();
             virtual ~FakePkgManager();

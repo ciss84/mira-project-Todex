@@ -324,10 +324,16 @@
 #define ssc_external_hdd_version_patchA                    0x00606A0D
 #define ssc_external_hdd_version_patchB                    0x00149BF0
 
-// SceShellCore patches
+// SceShellCore patches - downgrade hdd
 #define ssc_external_hdd_downgrade_patchA                  0x00606A0B
 #define ssc_external_hdd_downgrade_patchB                  0x00606A30
 #define ssc_external_hdd_downgrade_patchC                  0x00606A4A
+
+// SceShellCore patches - Assist Mode for Testkit
+#define ssc_sceKernelIsAssistMode_patchA                   0x00189630
+
+#define ssc_kernel_base                                    0xC0000082
+#define ssc_debug                                          0x1BD800D
 
 #pragma clang diagnostic pop
 
