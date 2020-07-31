@@ -6,22 +6,13 @@
 #include <Utils/Kernel.hpp>
 #include <Utils/Logger.hpp>
 
-extern "C"
-{
-	#include <vm/vm.h>
-	#include <sys/malloc.h>
+#include <vm/vm.h>
+#include <sys/malloc.h>
 
-	#include <vm/uma.h>
-};
+#include <vm/uma.h>
 
 void * operator new(unsigned long int p_Size)
 {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wnew-returns-null"
-	if (p_Size == 0)
-		return nullptr;
-#pragma clang diagnostic pop
-	
 	auto malloc = (void*(*)(unsigned long size, struct malloc_type* type, int flags))kdlsym(malloc);
 	auto M_TEMP = (struct malloc_type*)kdlsym(M_TEMP);
 
@@ -52,6 +43,7 @@ void * operator new[] (unsigned long int p_Size)
 // Delete
 void operator delete(void* p_Pointer) noexcept
 {
+
 	if (p_Pointer == nullptr)
 		return;
 	

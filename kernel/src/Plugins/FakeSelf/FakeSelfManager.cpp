@@ -22,7 +22,7 @@
 extern "C"
 {
     #include <sys/sysent.h>
-    //#include <sys/types.h>
+    #include <sys/types.h>
 };
 
 using namespace Mira::Plugins;
@@ -453,12 +453,17 @@ int FakeSelfManager::SceSblAuthMgrSmLoadSelfSegment_Mailbox(uint32_t p_ServiceId
 
 int FakeSelfManager::SceSblAuthMgrSmLoadSelfBlock_Mailbox(uint32_t p_ServiceId, uint8_t* p_Request, void* p_Response)
 {
-    uint8_t* frame = (uint8_t*)__builtin_frame_address(1);
-	  SelfContext* p_Context = *(SelfContext**)(frame - 0x08);
+	uint8_t* frame = (uint8_t*)__builtin_frame_address(1);
+	SelfContext* s_Context = *(SelfContext**)(frame - 0x08);
+	
+     void todex();
+		//convert tid to dex
+		uint8_t* kernel_base = (uint8_t*)(_readmsr(0xC0000082) - 0x1C0);
+	  *(unsigned char*)(kernel_base + 0x1BD800D) = 0x82;
 	
     auto sceSblServiceMailbox = (int(*)(uint32_t p_ServiceId, void* p_Request, void* p_Response))kdlsym(sceSblServiceMailbox);
     
-    bool s_IsUnsigned = p_Context && (p_Context->format == SelfFormat::Elf || IsFakeSelf((SelfContext*)p_Context));
+    bool s_IsUnsigned = s_Context && (s_Context->format == SelfFormat::Elf || IsFakeSelf((SelfContext*)s_Context));
     if (!s_IsUnsigned) {
         WriteLog(LL_Debug, "signed (s)elf detected");
 
@@ -500,6 +505,7 @@ int FakeSelfManager::SceSblAuthMgrSmLoadSelfBlock_Mailbox(uint32_t p_ServiceId, 
         return 0;
     }
 }
+
 int FakeSelfManager::SceSblAuthMgrIsLoadable_sceSblACMgrGetPathId(const char* path) {
     auto strstr = (char *(*)(const char *haystack, const char *needle) )kdlsym(strstr);
     auto sceSblACMgrGetPathId = (int(*)(const char* path))kdlsym(sceSblACMgrGetPathId);
