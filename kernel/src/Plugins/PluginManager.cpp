@@ -9,6 +9,7 @@
 #include <Plugins/FileManager/FileManager.hpp>
 #include <Plugins/FakeSelf/FakeSelfManager.hpp>
 #include <Plugins/FakePkg/FakePkgManager.hpp>
+#include <Plugins/EmuRegistry/EmuRegistryPlugin.hpp>
 #include <Plugins/Substitute/Substitute.hpp>
 #include <Plugins/BrowserActivator/BrowserActivator.hpp>
 #include <Plugins/MorpheusEnabler/MorpheusEnabler.hpp>
@@ -33,6 +34,7 @@ PluginManager::PluginManager() :
     m_FileManager(nullptr),
     m_FakeSelfManager(nullptr),
     m_FakePkgManager(nullptr),
+    m_EmuRegistry(nullptr),    
     m_Substitute(nullptr),
     m_BrowserActivator(nullptr),
     m_MorpheusEnabler(nullptr),
@@ -122,7 +124,16 @@ bool PluginManager::OnLoad()
             s_Success = false;
             break;
         }
-
+        
+        // Initialize emu-registry
+        m_EmuRegistry = new Mira::Plugins::EmuRegistryPlugin();
+        if (m_EmuRegistry == nullptr)
+        {
+            WriteLog(LL_Error, "could not allocate emulated registry.");
+            s_Success = false;
+            break;
+        }
+        
         // Initialize Substitute
         m_Substitute = new Mira::Plugins::Substitute();
         if (m_Substitute == nullptr)
@@ -184,6 +195,12 @@ bool PluginManager::OnLoad()
             WriteLog(LL_Error, "could not load fake pkg manager.");
     }
 
+    if (m_EmuRegistry)
+    {
+        if (!m_EmuRegistry->OnLoad())
+            WriteLog(LL_Error, "could not load emulated registry.");
+    }
+    
     if (m_Substitute)
     {
         if (!m_Substitute->OnLoad())
@@ -282,6 +299,17 @@ bool PluginManager::OnUnload()
         m_FakePkgManager = nullptr;
     }
 
+    // Delete the emulated registry
+    if (m_EmuRegistry)
+    {
+        WriteLog(LL_Debug, "unloading emulated registry");
+        if (!m_EmuRegistry->OnUnload())
+            WriteLog(LL_Error, "emuRegistry could not unload");
+
+        delete m_EmuRegistry;
+        m_EmuRegistry = nullptr;
+    }
+    
     if (m_SyscallGuard)
     {
         WriteLog(LL_Debug, "unloading syscall guard");
@@ -420,6 +448,12 @@ bool PluginManager::OnSuspend()
             WriteLog(LL_Error, "fake self manager suspend failed");
     }
 
+    if (m_EmuRegistry)
+    {
+        if (!m_EmuRegistry->OnSuspend())
+            WriteLog(LL_Error, "emuRegistry suspend failed");
+    }
+    
     // Suspend both of the loggers (cleans up the sockets)
     if (m_Logger)
     {
@@ -500,6 +534,13 @@ bool PluginManager::OnResume()
             WriteLog(LL_Error, "log manager resume failed (Console)");
     }
 
+    WriteLog(LL_Debug, "resuming emuRegistry");
+    if (m_EmuRegistry)
+    {
+        if (!m_EmuRegistry->OnResume())
+            WriteLog(LL_Error, "emuRegistry resume failed");
+    }
+    
     WriteLog(LL_Debug, "resuming substitute");
     if (m_Substitute)
     {
