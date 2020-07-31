@@ -21,10 +21,9 @@ It works differently to the custom firmware experience on Playstation 3, where C
   - Web browser activation (Thanks al-azif)
   - flatbuffers Enabler (Thanks flat)
   - Debug settings fix (Thanks al-azif) + fix all error fix idu test(5.05)  
-  - Remote packages Enabler (5.05)
-  - Remote play Enabler (5.05)
-  - Spoof 7.51 PSVR (Thanks @Leeful74) (5.05)
-  - debug trophies on retail Enabler (5.01,5.05)(Thanks systro)
+  - Remote play Enabler (6.72)
+  - Spoof 8.00 PSVR (Thanks @Leeful74) (6.72)
+  - debug trophies on retail Enabler (6.72)(Thanks Zecoxao)
   - Update freebsd-include v3 (Thanks specter) 
  
 You can also:
