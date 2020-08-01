@@ -7,8 +7,6 @@
     Bugfixes: SiSTRo (https://github.com/SiSTR0), SocraticBliss (https://github.com/SocraticBliss)
 */
 
-#define PS4_UPDATE_FULL_PATH "/update/PS4UPDATE.PUP"
-#define PS4_UPDATE_TEMP_PATH "/update/PS4UPDATE.PUP.net.temp"
 #include "FakePkgManager.hpp"
 #include <Utils/Kernel.hpp>
 #include <Utils/Kdlsym.hpp>
