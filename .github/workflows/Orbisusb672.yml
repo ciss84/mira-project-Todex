@@ -39,5 +39,5 @@ jobs:
       - name: Upload 6.72 elf
         uses: actions/upload-artifact@v2
         with:
-          name: Mira_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.elf
+          name: Mirausb_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.elf
           path: kernel/build/MiraUsb_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.elf
