@@ -21,11 +21,7 @@ jobs:
       - name: create loader directories
         run: cd loader; make create
       - name: clean loader
-        run: cd loader; make clean
-      - name: create loaderusb directories  
-        run: cd loaderusb; make create
-      - name: clean loader
-        run: cd loaderusb; make clean  
+        run: cd loader; make clean      
       - name: create mira directories
         run: cd kernel; make create
       - name: clean mira
