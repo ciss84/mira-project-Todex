@@ -12,7 +12,6 @@
 #include <Plugins/EmuRegistry/EmuRegistryPlugin.hpp>
 #include <Plugins/Substitute/Substitute.hpp>
 #include <Plugins/BrowserActivator/BrowserActivator.hpp>
-#include <Plugins/MorpheusEnabler/MorpheusEnabler.hpp>
 #include <Plugins/SyscallGuard/SyscallGuardPlugin.hpp>
 #include <Plugins/TTYRedirector/TTYRedirector.hpp>
 
@@ -37,7 +36,6 @@ PluginManager::PluginManager() :
     m_EmuRegistry(nullptr),
     m_Substitute(nullptr),
     m_BrowserActivator(nullptr),
-    m_MorpheusEnabler(nullptr),
     m_SyscallGuard(nullptr)
 {
     // Hushes error: private field 'm_FileManager' is not used [-Werror,-Wunused-private-field]
@@ -151,15 +149,6 @@ bool PluginManager::OnLoad()
             s_Success = false;
             break;
         }
-
-        // Initialize MorpheusEnabler
-        m_MorpheusEnabler = new Mira::Plugins::MorpheusEnabler();
-        if (m_MorpheusEnabler == nullptr)
-        {
-            WriteLog(LL_Error, "could not allocate morpheus enabler.");
-            s_Success = false;
-            break;
-        }
         
         // Initialize TTYRedirector
         m_TTYRedirector = new Mira::Plugins::TTYRedirector();
@@ -218,12 +207,6 @@ bool PluginManager::OnLoad()
     {
         if (!m_BrowserActivator->OnLoad())
             WriteLog(LL_Error, "could not load browser activator.");
-    }
-
-    if (m_MorpheusEnabler)
-    {
-        if (!m_MorpheusEnabler->OnLoad())
-            WriteLog(LL_Error, "could not load morpheus enabler.");
     }
     
     if (m_TTYRedirector)
@@ -367,18 +350,6 @@ bool PluginManager::OnUnload()
         m_BrowserActivator = nullptr;
     }
 
-    // Delete MorpheusEnabler
-    if (m_MorpheusEnabler)
-    {
-        WriteLog(LL_Debug, "unloading morpheus enabler");
-        if (!m_MorpheusEnabler->OnUnload())
-            WriteLog(LL_Error, "morpheus enabler could not unload");
-
-        // Free MorpheusEnabler
-        delete m_MorpheusEnabler;
-        m_MorpheusEnabler = nullptr;
-    }
-
     // Delete the debugger
     // NOTE: Don't unload before the debugger for catch error if something wrong
     if (m_Debugger)
@@ -489,13 +460,6 @@ bool PluginManager::OnSuspend()
         if (!m_BrowserActivator->OnSuspend())
             WriteLog(LL_Error, "browser activator suspend failed");
     }
-
-    // Suspend MorpheusEnabler (does nothing)
-    if (m_MorpheusEnabler)
-    {
-        if (!m_MorpheusEnabler->OnSuspend())
-            WriteLog(LL_Error, "morpheus enabler suspend failed");
-    }
     
     // Nota: Don't suspend before the debugger for catch error if something when wrong
     if (m_Debugger)
@@ -575,13 +539,6 @@ bool PluginManager::OnResume()
     {
         if (!m_BrowserActivator->OnResume())
             WriteLog(LL_Error, "browser activator resume failed");
-    }
-
-    WriteLog(LL_Debug, "resuming morpheus enabler");
-    if (m_MorpheusEnabler)
-    {
-        if (!m_MorpheusEnabler->OnResume())
-            WriteLog(LL_Error, "morpheus enabler resume failed");
     }
     
     WriteLog(LL_Debug, "resuming tty redirector");
