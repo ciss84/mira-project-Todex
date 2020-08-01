@@ -80,8 +80,8 @@ FakeSelfManager::FakeSelfManager()
     //m_SceSblAuthMgrVerifyHeaderHook = new Utils::Hook(kdlsym(sceSblAuthMgrVerifyHeader), reinterpret_cast<void*>(OnSceSblAuthMgrVerifyHeader));
     //m_SceSblAuthMgrIsLoadable2Hook = new Utils::Hook(kdlsym(sceSblAuthMgrIsLoadable2), reinterpret_cast<void*>(OnSceSblAuthMgrIsLoadable2));
 
-    //m__SceSblAuthMgrSmLoadSelfBlockHook = new Utils::Hook(kdlsym(_sceSblAuthMgrSmLoadSelfBlock), reinterpret_cast<void*>(OnSceSblAuthMgrSmLoadSelfBlock));
-    //m__SceSblAuthMgrSmLoadSelfSegmentHook = new Utils::Hook(kdlsym(_sceSblAuthMgrSmLoadSelfSegment), reinterpret_cast<void*>(OnSceSblAuthMgrSmLoadSelfSegment));
+    //m__SceSblAuthMgrSmLoadSelfBlockHook = new Utils::Hook(kdlsym(sceSblAuthMgrSmLoadSelfBlock), reinterpret_cast<void*>(On_SceSblAuthMgrSmLoadSelfBlock));
+    //m__SceSblAuthMgrSmLoadSelfSegmentHook = new Utils::Hook(kdlsym(sceSblAuthMgrSmLoadSelfSegment), reinterpret_cast<void*>(On_SceSblAuthMgrSmLoadSelfSegment));
 }
 
 FakeSelfManager::~FakeSelfManager()
@@ -426,7 +426,7 @@ int FakeSelfManager::SceSblAuthMgrSmLoadSelfSegment_Mailbox(uint32_t p_ServiceId
 
 	  uint8_t* frame = (uint8_t*)__builtin_frame_address(1);
 	  SelfContext* s_Context = *(SelfContext**)(frame - 0x08);
-
+	  
     auto s_RequestMessage = static_cast<MailboxMessage*>(p_Request);
     if (s_RequestMessage == nullptr)
     {
@@ -460,8 +460,25 @@ int FakeSelfManager::SceSblAuthMgrSmLoadSelfBlock_Mailbox(uint32_t p_ServiceId, 
 		//convert tid to dex
 		uint8_t* kernel_base = (uint8_t*)(_readmsr(0xC0000082) - 0x1C0);
 	  *(unsigned char*)(kernel_base + 0x1BD800D) = 0x82;
-	
+
     auto sceSblServiceMailbox = (int(*)(uint32_t p_ServiceId, void* p_Request, void* p_Response))kdlsym(sceSblServiceMailbox);
+
+    /*auto s_RequestMessage = static_cast<MailboxMessage*>(p_Request);
+    if (s_RequestMessage == nullptr)
+    {
+        WriteLog(LL_Error, "invalid request message");
+        return sceSblServiceMailbox(p_ServiceId, p_Request, p_Response);
+    }
+    
+    // Disgusting hack, we hook the caller of this, save the context, then continue as normal
+    // Then we pick up the context later
+    //SelfContext* s_Context = FakeSelfManager::m_LastContext;
+    // Check our context
+    if (p_Context == nullptr)
+    {
+        WriteLog(LL_Error, "could not load self BLOCK, could not get the self context");
+        return SceSblServiceMailbox(p_ServiceId, p_Request, p_Response);
+    }*/
     
     bool s_IsUnsigned = s_Context && (s_Context->format == SelfFormat::Elf || IsFakeSelf((SelfContext*)s_Context));
     if (!s_IsUnsigned) {
@@ -519,6 +536,7 @@ int FakeSelfManager::SceSblAuthMgrIsLoadable_sceSblACMgrGetPathId(const char* pa
     return sceSblACMgrGetPathId(path);
     return 0;
 }
+
 bool FakeSelfManager::OnLoad()
 {
     if (m_SceSblAuthMgrIsLoadable2Hook != nullptr)

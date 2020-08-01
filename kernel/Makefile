@@ -51,7 +51,7 @@ EXTERNAL_INC := ../external
 endif
 
 # Include directory paths
-I_DIRS	:=	-I. -I$(SRC_DIR) -I"$(BSD_INC)" -I$(EXTERNAL_INC) -I$(EXTERNAL_INC)/protobuf-c -I$(EXTERNAL_INC)/flatcc -I$(EXTERNAL_INC)/debug
+I_DIRS	:=	-I. -I$(SRC_DIR) -I"$(BSD_INC)" -I$(EXTERNAL_INC) -I$(EXTERNAL_INC)/protobuf-c -I$(EXTERNAL_INC)/flatcc
 
 # Library directory paths
 L_DIRS	:=	-L.	-Llib

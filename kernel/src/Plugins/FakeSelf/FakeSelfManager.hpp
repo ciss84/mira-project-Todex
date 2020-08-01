@@ -50,7 +50,7 @@ namespace Mira
 
             static const uint8_t c_ExecAuthInfo[AuthInfoSize];
             static const uint8_t c_DynlibAuthInfo[AuthInfoSize];
-	          static const uint64_t _readmsr(unsigned long __register)
+            static const uint64_t _readmsr(unsigned long __register)
             {
 	          unsigned long __edx;
 	          unsigned long __eax;

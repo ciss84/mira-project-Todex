@@ -34,7 +34,7 @@ PluginManager::PluginManager() :
     m_FileManager(nullptr),
     m_FakeSelfManager(nullptr),
     m_FakePkgManager(nullptr),
-    m_EmuRegistry(nullptr),    
+    m_EmuRegistry(nullptr),
     m_Substitute(nullptr),
     m_BrowserActivator(nullptr),
     m_MorpheusEnabler(nullptr),
@@ -67,7 +67,7 @@ bool PluginManager::OnLoad()
         }
 
         // Initialize the syscall guard
-        /*m_SyscallGuard = new Mira::Plugins::SyscallGuard();
+       /* m_SyscallGuard = new Mira::Plugins::SyscallGuard();
         if (m_SyscallGuard == nullptr)
         {
             WriteLog(LL_Error, "could not allocate syscall guard.");
@@ -86,8 +86,8 @@ bool PluginManager::OnLoad()
         }
         if (!m_Logger->OnLoad())
             WriteLog(LL_Error, "could not load logmanager");
-
-        // Initialize Logger (Console)
+            
+        // Initialize Logger Console
         char consolePath[] = "/dev/console";
         m_LoggerConsole = new Mira::Plugins::LogManagerExtent::LogManager(9997, consolePath);
         if (m_LoggerConsole == nullptr)
@@ -169,6 +169,7 @@ bool PluginManager::OnLoad()
             s_Success = false;
             break;
         }
+
     } while (false);
 
     if (m_Debugger)
@@ -176,6 +177,12 @@ bool PluginManager::OnLoad()
         if (!m_Debugger->OnLoad())
             WriteLog(LL_Error, "could not load debugger.");
     }
+    
+    /*if (m_SyscallGuard)
+    {
+        if (!m_SyscallGuard->OnLoad())
+            WriteLog(LL_Error, "could not load Syscall Guard.");
+    }*/
 
     if (m_FileManager)
     {
@@ -218,7 +225,7 @@ bool PluginManager::OnLoad()
         if (!m_MorpheusEnabler->OnLoad())
             WriteLog(LL_Error, "could not load morpheus enabler.");
     }
-
+    
     if (m_TTYRedirector)
     {
         if (!m_TTYRedirector->OnLoad())
@@ -310,16 +317,6 @@ bool PluginManager::OnUnload()
         m_EmuRegistry = nullptr;
     }
     
-    if (m_SyscallGuard)
-    {
-        WriteLog(LL_Debug, "unloading syscall guard");
-        if (!m_SyscallGuard->OnUnload())
-            WriteLog(LL_Error, "syscall guard could not unload");
-
-        delete m_SyscallGuard;
-        m_SyscallGuard = nullptr;
-    }
-
     // Delete the log server
     if (m_Logger)
     {
@@ -394,7 +391,19 @@ bool PluginManager::OnUnload()
         delete m_Debugger;
         m_Debugger = nullptr;
     }
+    
+    // Delete the m_SyscallGuard
+    // NOTE: Don't unload before the Syscall Guard for catch error if something wrong
+    /*if (m_SyscallGuard)
+    {
+        WriteLog(LL_Debug, "unloading syscall guard");
+        if (!m_SyscallGuard->OnUnload())
+            WriteLog(LL_Error, "syscall guard could not unload");
 
+        delete m_SyscallGuard;
+        m_SyscallGuard = nullptr;
+    }*/
+    
     // Unload TTY Redirector
     if (m_TTYRedirector)
     {
@@ -487,14 +496,20 @@ bool PluginManager::OnSuspend()
         if (!m_MorpheusEnabler->OnSuspend())
             WriteLog(LL_Error, "morpheus enabler suspend failed");
     }
-
+    
     // Nota: Don't suspend before the debugger for catch error if something when wrong
     if (m_Debugger)
     {
         if (!m_Debugger->OnSuspend())
             WriteLog(LL_Error, "debugger suspend failed");
     }
-
+    
+    /*if (m_SyscallGuard)
+    {
+        if (!m_SyscallGuard->OnSuspend())
+            WriteLog(LL_Error, "Syscall Guard suspend failed");
+    }*/
+    
     // Suspend TTYRedirector (does nothing)
     if (m_TTYRedirector)
     {
@@ -519,6 +534,13 @@ bool PluginManager::OnResume()
         if (!m_Debugger->OnResume())
             WriteLog(LL_Error, "debugger resume failed");
     }
+    
+    /*WriteLog(LL_Debug, "resuming Syscall Guard");
+    if (m_SyscallGuard)
+    {
+        if (!m_SyscallGuard->OnResume())
+            WriteLog(LL_Error, "Syscall Guard resume failed");
+    }*/
 
     WriteLog(LL_Debug, "resuming log manager");
     if (m_Logger)
@@ -561,14 +583,14 @@ bool PluginManager::OnResume()
         if (!m_MorpheusEnabler->OnResume())
             WriteLog(LL_Error, "morpheus enabler resume failed");
     }
-
+    
     WriteLog(LL_Debug, "resuming tty redirector");
     if (m_TTYRedirector)
     {
         if (!m_TTYRedirector->OnResume())
             WriteLog(LL_Error, "tty redirector resume failed");
     }
-    
+
     // Iterate through all of the plugins
     for (auto i = 0; i < m_Plugins.size(); ++i)
     {

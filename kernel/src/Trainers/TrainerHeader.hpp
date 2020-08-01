@@ -107,7 +107,7 @@ typedef struct _TrainerHeader
     {
         // We want to be able to support multiple versions of trainers as needs/requirements change
         TrainerHeaderV1 v1Header;
-        //TrainerHeaderV2 v2Header;
+        TrainerHeaderV2 v2Header;
     };
     
 } TrainerHeader;
