@@ -194,6 +194,8 @@
 #define kdlsym_addr_vn_fullpath                                        0x002F0C40
 #define kdlsym_addr_vsnprintf                                          0x00123630
 #define kdlsym_addr_wakeup                                             0x0022A0A0
+#define kdlsym_addr_global_settings_base                               0x01BD7FD0
+#define kdlsym_addr__sx_init_flags                                     0x00042450
 #define kdlsym_addr_Xfast_syscall                                      0x000001C0
 #define kdlsym_addr_setidt                                             0x000A1B90
 #define kdlsym_addr__sceSblAuthMgrSmLoadSelfBlock                      0x00660AF0
@@ -203,82 +205,6 @@
 // Kernel Hooks
 #define kdlsym_addr_printf_hook                                        0x01A9FE98
 
-// Kernel function patches
-#define kdlsym_addr_sigqueue_take                                      0x00028420
-#define kdlsym_addr_kern_psignal                                       0x0002D0F0
-#define kdlsym_addr_spinlock_enter                                     0x000A35B0
-#define kdlsym_addr_vm_mmap                                            0x000AC520
-#define kdlsym_addr_map_self_patch3                                    0x000AD2E4
-#define kdlsym_addr_vm_object_reference                                0x000D71A0
-#define kdlsym_addr_sys_setlogin_patch1                                0x0010EC1C
-#define kdlsym_addr_kern_ptrace_patch1                                 0x0010F892
-#define kdlsym_addr_aslr_gen_pseudo_random_number                      0x00118A00
-#define kdlsym_addr_disable_aslr_patch1                                0x00119A20
-#define kdlsym_addr_disable_aslr_patch2                                0x00119ACA
-#define kdlsym_addr_uprintf                                            0x00122AC0
-#define kdlsym_addr_devclass_get_softc                                 0x0015A9A0
-#define kdlsym_addr_panic                                              0x002074C0
-#define kdlsym_addr_setrunnable                                        0x0022A2A0
-#define kdlsym_addr_sceSblACMgrIsAllowedSystemLevelDebugging           0x00233BD0
-#define kdlsym_addr_sceSblACMgrIsAllowedCoredump                       0x00233BF0
-#define kdlsym_addr_sceSblACMgrHasMmapSelfCapability                   0x00233C40
-#define kdlsym_addr_sceSblACMgrIsAllowedToMmapSelf                     0x00233C50
-#define kdlsym_addr_sceSblACMgrGetDeviceAccessType                     0x00233F90
-#define kdlsym_addr_thread_unsuspend                                   0x00267E30
-#define kdlsym_addr_tdfind                                             0x002681F0
-#define kdlsym_addr_kernel_sysctl                                      0x00277DF0
-#define kdlsym_addr_dblfault_handler                                   0x002ED580
-#define kdlsym_addr_rindex                                             0x00326130
-#define kdlsym_addr_vrele                                              0x003B7DD0
-#define kdlsym_addr_bzero                                              0x003C14F0
-#define kdlsym_addr_sched_sleep                                        0x00445440
-#define kdlsym_addr_index                                              0x0044C010
-#define kdlsym_addr__vm_map_lock                                       0x0044CBF0
-#define kdlsym_addr__vm_map_unlock                                     0x0044CC60
-#define kdlsym_addr_vm_map_insert                                      0x0044DEF0
-#define kdlsym_addr_vm_map_fixed                                       0x0044FF80
-#define kdlsym_addr_vm_map_stack                                       0x004565E0
-#define kdlsym_addr_icc_nvs_write                                      0x00464290
-#define kdlsym_addr_namei                                              0x0048F630
-#define kdlsym_addr_NDFREE                                             0x004910D0
-#define kdlsym_addr_sceSblDriverMapPages                               0x00638310
-#define kdlsym_addr_sceSblDriverUnmapPages                             0x00638A00
-#define kdlsym_addr_sceSblServiceCrypt                                 0x0063E680
-#define kdlsym_addr_sceSblPfsSaveDataSignHeader                        0x00641450
-#define kdlsym_addr_sceSblKeymgrHoldKey                                0x00649EC0
-#define kdlsym_addr_sceSblKeymgrDropKey                                0x0064A2F0
-#define kdlsym_addr_sceSblKeymgrAllocateKeyId                          0x0064A500
-#define kdlsym_addr_sceSblKeymgrFreeKeyId                              0x0064A5A0
-#define kdlsym_addr_sceSblAuthMgrAddEEkc3                              0xE065C5F0
-#define kdlsym_addr_sceSblAuthMgrDeleteEEkc                            0x0065C870
-#define kdlsym_addr_sceSblAuthMgrAddEEkc                               0x0065CB40
-#define kdlsym_addr_sceSblAuthMgrAddEEkc2                              0x0065CDA0
-#define kdlsym_addr_sceSblNpDrmDecryptDiscRif                          0x006693A0
-#define kdlsym_addr_sceSblNpDrmDecryptRifNew                           0x0066A180
-#define kdlsym_addr_vm_object_deallocate                               0x0076F160
-#define kdlsym_addr_sysdump_perform_dump_on_fatal_trap                 0x00784120
-#define kdlsym_addr_kernel_max_text_size                               0x0078BA90
-#define kdlsym_addr_maxtsiz                                            0x01BB6A60
-#define kdlsym_addr_maxssiz                                            0x01BB6A80
-#define kdlsym_addr_sgrowsiz                                           0x01BB6A88
-#define kdlsym_addr_global_settings_base                               0x01BD7FD0
-#define kdlsym_addr_proctree_lock                                      0x022BBE40
-#define kdlsym_addr_usb_devclass_ptr                                   0x022BF2D8
-#define kdlsym_addr_initproc                                           0x022C0818
-#define kdlsym_addr_kthread_suspend                                    0x0008AA40
-#define kdlsym_addr_SceSblSysVeriThread                                0x0063C950
-#define kdlsym_addr_lim_cur                                            0x002CD510
-#define kdlsym_addr_icc_nvs_write                                      0x00464290
-#define kdlsym_addr_ctxStatus                                          0x026B4130
-#define kdlsym_addr_ctxTable                                           0x026B4140
-#define kdlsym_addr_s_taskId                                           0x026B4310
-#define kdlsym_addr__sceSblAuthMgrSmFinalize                           0x0065FF70
-#define kdlsym_addr_s_sm_sxlock                                        0x026B40C8
-#define kdlsym_addr__sx_init_flags                                     0x00042450
-#define kdlsym_addr__mtx_unlock_flags                                  0x00496810
-#define kdlsym_addr__mtx_lock_flags                                    0x00496540
-#define kdlsym_addr_sched_prio                                         0x004453C0
-
 // self function patches
 #define kdlsym_addr_sceSblAuthMgrIsLoadable__sceSblACMgrGetPathId_hook             0x006591BC
 #define kdlsym_addr_sceSblAuthMgrVerifyHeader_hookA                                0x00659AC6
@@ -286,27 +212,13 @@
 #define kdlsym_addr_sceSblAuthMgrIsLoadable2_hook                                  0x0065930F
 #define kdlsym_addr_sceSblAuthMgrSmLoadSelfBlock__sceSblServiceMailbox_hook        0x00661571
 #define kdlsym_addr_sceSblAuthMgrSmLoadSelfSegment__sceSblServiceMailbox_hook      0x0066092A
+
 #define kdlsym_addr_npdrm_decrypt_isolated_rif__sceSblKeymgrSmCallfunc_hook        0x00669500
 #define kdlsym_addr_npdrm_decrypt_rif_new__sceSblKeymgrSmCallfunc_hook             0x0066A313
 #define kdlsym_addr_sceSblKeymgrSetKeyStorage__sceSblDriverSendMsg_hook            0x00646EA5
 #define kdlsym_addr_sceSblKeymgrInvalidateKey__sx_xlock_hook                       0x0064AA3D
 #define kdlsym_addr_mountpfs__sceSblPfsSetKeys_hookA                               0x006CDF15
 #define kdlsym_addr_mountpfs__sceSblPfsSetKeys_hookB                               0x006CE141
-#define kdlsym_addr_memmove                                            0x003EBB00
-#define kdlsym_addr_sceRegMgrSetInt                                    0x005077D0
-#define kdlsym_addr_sceRegMgrGetInt                                    0x00508A60
-#define kdlsym_addr_sceRegMgrGetStr                                    0x00509220
-#define kdlsym_addr_sceRegMgrSetBin                                    0x005092F0
-#define kdlsym_addr_sceRegMgrGetBin                                    0x005093A0
-#define kdlsym_addr_sceRegMgrSetStr                                    0x00509060
-#define kdlsym_addr__thread_lock_flags                                 0x00496C90
-#define kdlsym_addr_spinlock_exit                                      0x000A35F0
-#define kdlsym_addr_map_chunk_table                                    0x0064BB50
-#define kdlsym_addr_make_chunk_table_system                            0x0064BD20
-#define kdlsym_addr__thread_lock_flags                                 0x00496C90
-
-// user land offsets
-#define	SceSysCore_addr_ptrace_patch                                   0x00018D6B
 
 // SceShellCore patches - call sceKernelIsGenuineCEX
 #define ssc_sceKernelIsGenuineCEX_patchA                   0x00189602
@@ -320,18 +232,15 @@
 #define ssc_nidf_libSceDipsw_patchC                        0x00835670
 #define ssc_nidf_libSceDipsw_patchD                        0x00A12BC0
 
-// SceShellUI patches - debug patches
-#define ssu_sceSblRcMgrIsAllowDebugMenuForSettings_patch   0x0001D670
-#define ssu_sceSblRcMgrIsStoreMode_patch                   0x0001D9D0
-
-// SceShellCore patches - enable VR without spoof
-#define ssc_enable_vr                                      0x00DDDD70
-
 // SceShellCore patches - use free prefix instead fake
 #define ssc_fake_to_free_patch                             0x00FD2BF1
 
-// SceShellCore patches - enable fakepkg
+/*// SceShellCore patches - enable fakepkg
 #define ssc_enable_fakepkg_patch                           0x003EFCF0
+
+// SceShellUI patches - debug patches
+#define ssu_sceSblRcMgrIsAllowDebugMenuForSettings_patch   0x0001D670
+#define ssu_sceSblRcMgrIsStoreMode_patch                   0x0001D9D0
 
 // SceShellCore patches - enable sys dynlib dlsym in all process
 #define ssc_sys_dynlib_dlsym_patch                         0x001D895A
@@ -350,7 +259,18 @@
 #define ssc_sceKernelIsAssistMode_patchA                   0x00189630
 
 // SceShellCore patches - Remote Pkg Installer
-#define ssc_Remote_Pkg_patch                               0x002A8CDF
+#define ssc_Remote_Pkg_patch                               0x002A8CDF*/
+
+// SceShellCore patches - enable VR without spoof
+#define ssc_enable_vr                                      0x00DDDD70
+
+// sceRegMgr
+#define kdlsym_addr_sceRegMgrGetInt                        0x00508A60
+#define kdlsym_addr_sceRegMgrSetInt                        0x005077D0
+#define kdlsym_addr_sceRegMgrGetBin                        0x005093A0
+#define kdlsym_addr_sceRegMgrSetBin                        0x005092F0
+#define kdlsym_addr_sceRegMgrGetStr                        0x00509220
+#define kdlsym_addr_sceRegMgrSetStr                        0x00509060
 
 #pragma clang diagnostic pop
 
