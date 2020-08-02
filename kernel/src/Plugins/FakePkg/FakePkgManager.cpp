@@ -188,7 +188,7 @@ bool FakePkgManager::ShellCorePatch()
     s_Entries = nullptr;
 
     uint8_t xor__eax_eax[5] = { 0x31, 0xC0, 0x90, 0x90, 0x90 };      
-    //uint8_t four_five_zero[2] = { 0x50, 0x04 };
+    uint8_t four_five_zero[2] = { 0x50, 0x04 };
     
     /*s_Ret = kptrace_t(PT_ATTACH, s_Process->p_pid, 0, 0, s_TextStart);
     if (s_Ret < 0)
@@ -260,7 +260,7 @@ bool FakePkgManager::ShellCorePatch()
         return false;
     }
 
-#if MIRA_PLATFORM == MIRA_PLATFORM_ORBIS_BSD_505   
+#if MIRA_PLATFORM == MIRA_PLATFORM_ORBIS_BSD_672   
    	s_Ret = Utilities::ProcessReadWriteMemory(s_Process, (void*)(s_TextStart + ssc_enable_fakepkg_patch), 8, (void*)"\xE9\x98\x00\x00\x00\x90\x90\x90", nullptr, true);
 	  if (s_Ret < 0)
 	  {
@@ -323,9 +323,7 @@ bool FakePkgManager::ShellCorePatch()
 			WriteLog(LL_Error, "ssc_Remote_Pkg_patch");		
 			return false;
 	  }
-<<<<<<< HEAD
     #endif
-=======
 	  
    /* s_Ret = Utilities::ProcessReadWriteMemory(s_Process, (void*)(s_TextStart + kdlsym_addr_pmap_PROTECT_P), 1, (void*) "\xEB", nullptr, true);
     if (s_Ret < 0)
@@ -365,7 +363,7 @@ bool FakePkgManager::ShellCorePatch()
 		return false;
 	  }
     */
->>>>>>> 64e9466d6f3e218815c8ab4e2561b00a0818ebd9
+
     /*Utilities::PtraceIO(s_Process->p_pid, PIOD_WRITE_I, (void*)(s_TextStart + SHELLCORE_ENABLE_DEBUG_PKG_PATCH_1_1_OFFSET), sizeof(xor__ehx_eax), xor__ehx_eax, nullptr, true);
     Utilities::PtraceIO(s_Process->p_pid, PIOD_WRITE_I, (void*)(s_TextStart + SHELLCORE_ENABLE_DEBUG_PKG_PATCH_1_2_OFFSET), sizeof(xor__ehx_eax), xor__ehx_eax, nullptr, true);
     Utilities::PtraceIO(s_Process->p_pid, PIOD_WRITE_I, (void*)(s_TextStart + SHELLCORE_ENABLE_DEBUG_PKG_PATCH_1_3_OFFSET), sizeof(xor__ehx_eax), xor__ehx_eax, nullptr, true);
@@ -435,7 +433,7 @@ bool FakePkgManager::ShellUIPatch()
     s_Entries = nullptr;
 
     // TODO: Fix all fw suport; I don't feel like fixing 1.76 support atm -kd
-    #if MIRA_PLATFORM == MIRA_PLATFORM_ORBIS_BSD_505
+    #if MIRA_PLATFORM == MIRA_PLATFORM_ORBIS_BSD_672
     uint8_t mov__eax_1__ret[6] = { 0xB8, 0x01, 0x00, 0x00, 0x00, 0xC3 };
 
     s_Ret = Utilities::ProcessReadWriteMemory(s_Process, (void*)(s_LibKernelTextStart + ssu_sceSblRcMgrIsAllowDebugMenuForSettings_patch), sizeof(mov__eax_1__ret), mov__eax_1__ret, nullptr, true);
