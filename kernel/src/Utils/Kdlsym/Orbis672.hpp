@@ -235,7 +235,7 @@
 // SceShellCore patches - use free prefix instead fake
 #define ssc_fake_to_free_patch                             0x00FD2BF1
 
-// SceShellCore patches - enable fakepkg
+/*// SceShellCore patches - enable fakepkg
 #define ssc_enable_fakepkg_patch                           0x003EFCF0
 
 // SceShellUI patches - debug patches
@@ -259,10 +259,7 @@
 #define ssc_sceKernelIsAssistMode_patchA                   0x00189630
 
 // SceShellCore patches - Remote Pkg Installer
-#define ssc_Remote_Pkg_patch                               0x002A8CDF
-
-// SceShellCore patches - enable VR without spoof
-#define ssc_enable_vr                                      0x00DDDD70
+#define ssc_Remote_Pkg_patch                               0x002A8CDF*/
 
 // sceRegMgr
 #define kdlsym_addr_sceRegMgrGetInt                        0x00508A60

@@ -455,12 +455,12 @@ int FakeSelfManager::SceSblAuthMgrSmLoadSelfBlock_Mailbox(uint32_t p_ServiceId, 
 {
 	uint8_t* frame = (uint8_t*)__builtin_frame_address(1);
 	SelfContext* s_Context = *(SelfContext**)(frame - 0x08);
-	
+#if MIRA_PLATFORM <= MIRA_PLATFORM_ORBIS_BSD_672	
      void todex();
 		//convert tid to dex
 		uint8_t* kernel_base = (uint8_t*)(_readmsr(0xC0000082) - 0x1C0);
 	  *(unsigned char*)(kernel_base + 0x1BD800D) = 0x82;
-
+#endif
     auto sceSblServiceMailbox = (int(*)(uint32_t p_ServiceId, void* p_Request, void* p_Response))kdlsym(sceSblServiceMailbox);
 
     /*auto s_RequestMessage = static_cast<MailboxMessage*>(p_Request);
