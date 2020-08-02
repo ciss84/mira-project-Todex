@@ -323,9 +323,7 @@ bool FakePkgManager::ShellCorePatch()
 			WriteLog(LL_Error, "ssc_Remote_Pkg_patch");		
 			return false;
 	  }
-<<<<<<< HEAD
     #endif
-=======
 	  
    /* s_Ret = Utilities::ProcessReadWriteMemory(s_Process, (void*)(s_TextStart + kdlsym_addr_pmap_PROTECT_P), 1, (void*) "\xEB", nullptr, true);
     if (s_Ret < 0)
@@ -365,7 +363,6 @@ bool FakePkgManager::ShellCorePatch()
 		return false;
 	  }
     */
->>>>>>> 64e9466d6f3e218815c8ab4e2561b00a0818ebd9
     /*Utilities::PtraceIO(s_Process->p_pid, PIOD_WRITE_I, (void*)(s_TextStart + SHELLCORE_ENABLE_DEBUG_PKG_PATCH_1_1_OFFSET), sizeof(xor__ehx_eax), xor__ehx_eax, nullptr, true);
     Utilities::PtraceIO(s_Process->p_pid, PIOD_WRITE_I, (void*)(s_TextStart + SHELLCORE_ENABLE_DEBUG_PKG_PATCH_1_2_OFFSET), sizeof(xor__ehx_eax), xor__ehx_eax, nullptr, true);
     Utilities::PtraceIO(s_Process->p_pid, PIOD_WRITE_I, (void*)(s_TextStart + SHELLCORE_ENABLE_DEBUG_PKG_PATCH_1_3_OFFSET), sizeof(xor__ehx_eax), xor__ehx_eax, nullptr, true);
