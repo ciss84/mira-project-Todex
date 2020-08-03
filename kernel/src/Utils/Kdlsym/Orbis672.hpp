@@ -36,8 +36,8 @@
 #define kdlsym_addr_cloneuio                                           0x002D3060
 #define kdlsym_addr_console_cdev                                       0x022C0CD8
 #define kdlsym_addr_console_write                                      0x003F8710
-#define kdlsym_addr_contigfree                             0x000B7510
-#define kdlsym_addr_contigmalloc                           0x000B7150
+#define kdlsym_addr_contigfree                                         0x000B7510
+#define kdlsym_addr_contigmalloc                                       0x000B7150
 #define kdlsym_addr_copyin                                             0x003C17A0
 #define kdlsym_addr_copyin_patch1                                      0x003C17F7
 #define kdlsym_addr_copyin_patch2                                      0x003C1803
@@ -51,15 +51,15 @@
 #define kdlsym_addr_critical_exit                                      0x002AA0B0
 #define kdlsym_addr_deci_tty_write                                     0x004A97E0
 #define kdlsym_addr_destroy_dev                                        0x003BDCB0
-#define kdlsym_addr_dmem_start_app_process                 0x0007CC90
+#define kdlsym_addr_dmem_start_app_process                             0x0007CC90
 #define kdlsym_addr_dynlib_do_dlsym                                    0x00417960
-#define kdlsym_addr_dynlib_find_obj_by_handle              0x00418AC0
+#define kdlsym_addr_dynlib_find_obj_by_handle                          0x00418AC0
 #define kdlsym_addr_eventhandler_register                              0x00402E80
 #define kdlsym_addr_eventhandler_deregister                            0x00403220
 #define kdlsym_addr_eventhandler_find_list                             0x00403420
-#define kdlsym_addr_exec_new_vmspace                       0x0011AE30
+#define kdlsym_addr_exec_new_vmspace                                   0x0011AE30
 #define kdlsym_addr_faultin                                            0x003E0410
-#define kdlsym_addr_fget_unlocked                          0x0024BAA0
+#define kdlsym_addr_fget_unlocked                                      0x0024BAA0
 #define kdlsym_addr_fpu_kern_ctx                                       0x02694080
 #define kdlsym_addr_fpu_kern_enter                                     0x0036B6E0
 #define kdlsym_addr_fpu_kern_leave                                     0x0036B7D0
@@ -67,14 +67,14 @@
 #define kdlsym_addr_gdt                                                0x01BBCA10
 #define kdlsym_addr_gpu_va_page_list                                   0x0266AC68
 #define kdlsym_addr_icc_nvs_read                                       0x00464450
-#define kdlsym_addr_kern_close                             0x00249400
+#define kdlsym_addr_kern_close                                         0x00249400
 #define kdlsym_addr_kern_ioctl                                         0x0039C5C0
-#define kdlsym_addr_kern_mkdirat                           0x004A3AE0
-#define kdlsym_addr_kern_open                              0x0049E990
+#define kdlsym_addr_kern_mkdirat                                       0x004A3AE0
+#define kdlsym_addr_kern_open                                          0x0049E990
 #define kdlsym_addr_kern_openat                                        0x0049E9F0
 #define kdlsym_addr_kern_readv                                         0x0039B790
-#define kdlsym_addr_kern_reboot                            0x00206D50
-#define kdlsym_addr_kern_sysents                           0x0111E000
+#define kdlsym_addr_kern_reboot                                        0x00206D50
+#define kdlsym_addr_kern_sysents                                       0x0111E000
 #define kdlsym_addr_kern_thr_create                                    0x004A6FB0
 #define kdlsym_addr_kernel_map                                         0x0220DFC0
 #define kdlsym_addr_kernel_mount                                       0x00442F90
@@ -88,7 +88,7 @@
 #define kdlsym_addr_kthread_add                                        0x0008A600
 #define kdlsym_addr_kthread_exit                                       0x0008A8F0
 #define kdlsym_addr_M_IOV                                              0x01A87AD0
-#define kdlsym_addr_M_LINKER                               0x01A8EDB0
+#define kdlsym_addr_M_LINKER                                           0x01A8EDB0
 #define kdlsym_addr_M_MOUNT                                            0x01A90CA0
 #define kdlsym_addr_M_TEMP                                             0x01540EB0
 #define kdlsym_addr_make_dev_p                                         0x003BD770
@@ -96,11 +96,11 @@
 #define kdlsym_addr_memcmp                                             0x00207E40
 #define kdlsym_addr_memcpy                                             0x003C15B0
 #define kdlsym_addr_memcpy_patch1                                      0x003C15BD
-#define kdlsym_addr_memmove                                0x003EBB00
+#define kdlsym_addr_memmove                                            0x003EBB00
 #define kdlsym_addr_memset                                             0x001687D0
 #define kdlsym_addr_mini_syscore_self_binary                           0x0156A588
-#define kdlsym_addr_mount_arg                              0x00042CF0
-#define kdlsym_addr_mount_argb                             0x004412B0
+#define kdlsym_addr_mount_arg                                          0x00042CF0
+#define kdlsym_addr_mount_argb                                         0x004412B0
 #define kdlsym_addr_mount_argf                                         0x00442DE0
 #define kdlsym_addr_mtx_destroy                                        0x00497050
 #define kdlsym_addr_mtx_init                                           0x00496FE0
@@ -108,10 +108,6 @@
 #define kdlsym_addr_pause                                              0x0022A080
 #define kdlsym_addr_pfind                                              0x0033DC90
 #define kdlsym_addr_pmap_activate                                      0x0005A280
-//#define kdlsym_addr_pmap_PROTECT	                         0x0
-//#define kdlsym_addr_pmap_PROTECT_P	                       0x0
-//#define kdlsym_addr_pmap_STORE		                         0x0
-//#define kdlsym_addr_DT_HASH_SEGMENT		                     0x0
 #define kdlsym_addr_printf                                             0x00123280
 #define kdlsym_addr_prison0                                            0x0113E518
 #define kdlsym_addr_proc0                                              0x022BFA40
@@ -120,7 +116,7 @@
 #define kdlsym_addr_realloc                                            0x0000DAD0
 #define kdlsym_addr_rootvnode                                          0x02300320
 #define kdlsym_addr_RsaesPkcs1v15Dec2048CRT                            0x001D6050
-#define kdlsym_addr_sbl_eap_internal_partition_key         0x026DCCD0
+#define kdlsym_addr_sbl_eap_internal_partition_key                     0x026DCCD0
 #define kdlsym_addr_sbl_keymgr_buf_gva                                 0x02698808
 #define kdlsym_addr_sbl_keymgr_buf_va                                  0x02698000
 #define kdlsym_addr_sbl_keymgr_key_rbtree                              0x02694580
@@ -200,7 +196,6 @@
 #define kdlsym_addr_setidt                                             0x000A1B90
 #define kdlsym_addr__sceSblAuthMgrSmLoadSelfBlock                      0x00660AF0
 #define kdlsym_addr__sceSblAuthMgrSmLoadSelfSegment                    0x006606A0
-//#define kdlsym_addr__sceSblAuthMgrSmdecryptSelfBlock        0x0
 
 // Kernel Hooks
 #define kdlsym_addr_printf_hook                                        0x01A9FE98
@@ -234,32 +229,6 @@
 
 // SceShellCore patches - use free prefix instead fake
 #define ssc_fake_to_free_patch                             0x00FD2BF1
-
-// SceShellCore patches - enable fakepkg
-#define ssc_enable_fakepkg_patch                           0x003EFCF0
-
-// SceShellUI patches - debug patches
-#define ssu_sceSblRcMgrIsAllowDebugMenuForSettings_patch   0x0001D670
-#define ssu_sceSblRcMgrIsStoreMode_patch                   0x0001D9D0
-
-/*// SceShellCore patches - enable sys dynlib dlsym in all process
-#define ssc_sys_dynlib_dlsym_patch                         0x001D895A
-
-// SceShellCore patches - enable official external HDD support Support added in 4.50
-#define ssc_external_hdd_pkg_installer_patch               0x009FB311
-#define ssc_external_hdd_version_patchA                    0x00606A0D
-#define ssc_external_hdd_version_patchB                    0x00149BF0
-
-// SceShellCore patches - downgrade hdd
-#define ssc_external_hdd_downgrade_patchA                  0x00606A0B
-#define ssc_external_hdd_downgrade_patchB                  0x00606A30
-#define ssc_external_hdd_downgrade_patchC                  0x00606A4A
-
-// SceShellCore patches - Assist Mode for Testkit
-#define ssc_sceKernelIsAssistMode_patchA                   0x00189630
-
-// SceShellCore patches - Remote Pkg Installer
-#define ssc_Remote_Pkg_patch                               0x002A8CDF*/
 
 // sceRegMgr
 #define kdlsym_addr_sceRegMgrGetInt                        0x00508A60

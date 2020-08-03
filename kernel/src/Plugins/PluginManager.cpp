@@ -12,6 +12,14 @@
 #include <Plugins/EmuRegistry/EmuRegistryPlugin.hpp>
 #include <Plugins/Substitute/Substitute.hpp>
 #include <Plugins/BrowserActivator/BrowserActivator.hpp>
+#include <Plugins/MorpheusEnabler/MorpheusEnabler.hpp>
+    #if MIRA_PLATFORM <= MIRA_PLATFORM_ORBIS_BSD_176 || MIRA_PLATFORM > MIRA_PLATFORM_ORBIS_BSD_505
+    #else
+#include <Plugins/Debugger3/Debugger3.hpp>    
+#include <Plugins/RemotePlayEnabler/RemotePlayEnabler.hpp>
+#include <Plugins/RemotePkgEnabler/RemotePkgEnabler.hpp>
+#include <Plugins/DebugTrophyEnabler/DebugTrophyEnabler.hpp>
+    #endif
 #include <Plugins/SyscallGuard/SyscallGuardPlugin.hpp>
 #include <Plugins/TTYRedirector/TTYRedirector.hpp>
 
@@ -36,6 +44,7 @@ PluginManager::PluginManager() :
     m_EmuRegistry(nullptr),
     m_Substitute(nullptr),
     m_BrowserActivator(nullptr),
+    m_MorpheusEnabler(nullptr),
     m_SyscallGuard(nullptr)
 {
     // Hushes error: private field 'm_FileManager' is not used [-Werror,-Wunused-private-field]
@@ -149,7 +158,51 @@ bool PluginManager::OnLoad()
             s_Success = false;
             break;
         }
+
+        // Initialize MorpheusEnabler
+        m_MorpheusEnabler = new Mira::Plugins::MorpheusEnabler();
+        if (m_MorpheusEnabler == nullptr)
+        {
+            WriteLog(LL_Error, "could not allocate morpheus enabler.");
+            s_Success = false;
+            break;
+        }
+    #if MIRA_PLATFORM <= MIRA_PLATFORM_ORBIS_BSD_176 || MIRA_PLATFORM > MIRA_PLATFORM_ORBIS_BSD_505
+    #else 
+        m_Debugger3 = new Mira::Plugins::Debugger3();
+        if (m_Debugger3 == nullptr)
+        {
+            WriteLog(LL_Error, "could not allocate debugger.");
+            s_Success = false;
+            break;
+        }
+               
+        // Initialize RemotePlayEnabler
+        m_RemotePlayEnabler = new Mira::Plugins::RemotePlayEnabler();
+        if (m_RemotePlayEnabler == nullptr)
+        {
+            WriteLog(LL_Error, "could not allocate remote play enabler.");
+            s_Success = false;
+            break;
+        }
         
+        // Initialize RemotePkgEnabler
+        m_RemotePkgEnabler = new Mira::Plugins::RemotePkgEnabler();
+        if (m_RemotePkgEnabler == nullptr)
+        {
+            WriteLog(LL_Error, "could not allocate remote pkg enabler.");
+            s_Success = false;
+            break;
+        }
+        // Initialize DebugTrophyEnabler
+        m_DebugTrophyEnabler = new Mira::Plugins::DebugTrophyEnabler();
+        if (m_DebugTrophyEnabler == nullptr)
+        {
+            WriteLog(LL_Error, "could not allocate Debug Trophy Enabler.");
+            s_Success = false;
+            break;
+        }
+    #endif        
         // Initialize TTYRedirector
         m_TTYRedirector = new Mira::Plugins::TTYRedirector();
         if (m_TTYRedirector == nullptr)
@@ -208,7 +261,35 @@ bool PluginManager::OnLoad()
         if (!m_BrowserActivator->OnLoad())
             WriteLog(LL_Error, "could not load browser activator.");
     }
-    
+
+    if (m_MorpheusEnabler)
+    {
+        if (!m_MorpheusEnabler->OnLoad())
+            WriteLog(LL_Error, "could not load morpheus enabler.");
+    }
+    #if MIRA_PLATFORM <= MIRA_PLATFORM_ORBIS_BSD_176 || MIRA_PLATFORM > MIRA_PLATFORM_ORBIS_BSD_505
+    #else    
+    if (m_Debugger3)
+    {
+        if (!m_Debugger3->OnLoad())
+            WriteLog(LL_Error, "could not load debugger.");
+    }    
+    if (m_RemotePlayEnabler)
+    {
+        if (!m_RemotePlayEnabler->OnLoad())
+            WriteLog(LL_Error, "could not load remote play enabler.");
+    }    
+    if (m_RemotePkgEnabler)
+    {
+        if (!m_RemotePkgEnabler->OnLoad())
+            WriteLog(LL_Error, "could not load remote pkg enabler.");
+    }    
+    if (m_DebugTrophyEnabler)
+    {
+        if (!m_DebugTrophyEnabler->OnLoad())
+            WriteLog(LL_Error, "could not load Debug Trophy Enabler.");
+    }
+    #endif    
     if (m_TTYRedirector)
     {
         if (!m_TTYRedirector->OnLoad())
@@ -350,6 +431,67 @@ bool PluginManager::OnUnload()
         m_BrowserActivator = nullptr;
     }
 
+    // Delete MorpheusEnabler
+    if (m_MorpheusEnabler)
+    {
+        WriteLog(LL_Debug, "unloading morpheus enabler");
+        if (!m_MorpheusEnabler->OnUnload())
+            WriteLog(LL_Error, "morpheus enabler could not unload");
+
+        // Free MorpheusEnabler
+        delete m_MorpheusEnabler;
+        m_MorpheusEnabler = nullptr;
+    }    
+    #if MIRA_PLATFORM <= MIRA_PLATFORM_ORBIS_BSD_176 || MIRA_PLATFORM > MIRA_PLATFORM_ORBIS_BSD_505
+    #else    
+    // Delete the debugger
+    // NOTE: Don't unload before the debugger for catch error if something wrong
+    if (m_Debugger3)
+    {
+        WriteLog(LL_Debug, "unloading debugger");
+        if (!m_Debugger3->OnUnload())
+            WriteLog(LL_Error, "debugger could not unload");
+
+        // Free the debugger
+        delete m_Debugger3;
+        m_Debugger3 = nullptr;
+    }    
+   
+    // Delete RemotePlayEnabler
+    if (m_RemotePlayEnabler)
+    {
+        WriteLog(LL_Debug, "unloading remote play enabler");
+        if (!m_RemotePlayEnabler->OnUnload())
+            WriteLog(LL_Error, "remote play enabler could not unload");
+
+        // Free RemotePlayEnabler
+        delete m_RemotePlayEnabler;
+        m_RemotePlayEnabler = nullptr;
+    }
+    
+    // Delete RemotePkgEnabler
+    if (m_RemotePlayEnabler)
+    {
+        WriteLog(LL_Debug, "unloading remote pkg enabler");
+        if (!m_RemotePkgEnabler->OnUnload())
+            WriteLog(LL_Error, "remote pkg enabler could not unload");
+
+        // Free RemotePkgEnabler
+        delete m_RemotePkgEnabler;
+        m_RemotePkgEnabler = nullptr;
+    }
+    // Delete DebugTrophyEnabler
+    if (m_DebugTrophyEnabler)
+    {
+        WriteLog(LL_Debug, "unloading remote pkg enabler");
+        if (!m_DebugTrophyEnabler->OnUnload())
+            WriteLog(LL_Error, "Debug Trophy Enabler could not unload");
+
+        // Free DebugTrophyEnabler
+        delete m_DebugTrophyEnabler;
+        m_DebugTrophyEnabler = nullptr;
+    }
+    #endif 
     // Delete the debugger
     // NOTE: Don't unload before the debugger for catch error if something wrong
     if (m_Debugger)
@@ -460,7 +602,42 @@ bool PluginManager::OnSuspend()
         if (!m_BrowserActivator->OnSuspend())
             WriteLog(LL_Error, "browser activator suspend failed");
     }
+
+    // Suspend MorpheusEnabler (does nothing)
+    if (m_MorpheusEnabler)
+    {
+        if (!m_MorpheusEnabler->OnSuspend())
+            WriteLog(LL_Error, "morpheus enabler suspend failed");
+    }
+    #if MIRA_PLATFORM <= MIRA_PLATFORM_ORBIS_BSD_176 || MIRA_PLATFORM > MIRA_PLATFORM_ORBIS_BSD_505
+    #else    
+    if (m_Debugger3)
+    {
+        if (!m_Debugger3->OnSuspend())
+            WriteLog(LL_Error, "debugger suspend failed");
+    }
+        
+    // Suspend RemotePlayEnabler (does nothing)
+    if (m_RemotePlayEnabler)
+    {
+        if (!m_RemotePlayEnabler->OnSuspend())
+            WriteLog(LL_Error, "remote play enabler suspend failed");
+    }
     
+    // Suspend RemotePkgEnabler (does nothing)
+    if (m_RemotePkgEnabler)
+    {
+        if (!m_RemotePkgEnabler->OnSuspend())
+            WriteLog(LL_Error, "remote pkg enabler suspend failed");
+    }
+    
+    // Suspend DebugTrophyEnabler (does nothing)
+    if (m_DebugTrophyEnabler)
+    {
+        if (!m_DebugTrophyEnabler->OnSuspend())
+            WriteLog(LL_Error, "Debug Trophy Enabler suspend failed");
+    }
+    #endif    
     // Nota: Don't suspend before the debugger for catch error if something when wrong
     if (m_Debugger)
     {
@@ -540,7 +717,43 @@ bool PluginManager::OnResume()
         if (!m_BrowserActivator->OnResume())
             WriteLog(LL_Error, "browser activator resume failed");
     }
+
+    WriteLog(LL_Debug, "resuming morpheus enabler");
+    if (m_MorpheusEnabler)
+    {
+        if (!m_MorpheusEnabler->OnResume())
+            WriteLog(LL_Error, "morpheus enabler resume failed");
+    }
+    #if MIRA_PLATFORM <= MIRA_PLATFORM_ORBIS_BSD_176 || MIRA_PLATFORM > MIRA_PLATFORM_ORBIS_BSD_505
+    #else    
+    WriteLog(LL_Debug, "resuming debugger");
+    if (m_Debugger3)
+    {
+        if (!m_Debugger3->OnResume())
+            WriteLog(LL_Error, "debugger resume failed");
+    }
+        
+    WriteLog(LL_Debug, "resuming Remote Play Enabler");
+    if (m_RemotePlayEnabler)
+    {
+        if (!m_RemotePlayEnabler->OnResume())
+            WriteLog(LL_Error, "Remote Play Enabler resume failed");
+    }
+
+    WriteLog(LL_Debug, "resuming Remote Pkg Enabler");
+    if (m_RemotePkgEnabler)
+    {
+        if (!m_RemotePkgEnabler->OnResume())
+            WriteLog(LL_Error, "Remote Pkg Enabler resume failed");
+    }
     
+    WriteLog(LL_Debug, "resuming Debug Trophy Enabler");
+    if (m_DebugTrophyEnabler)
+    {
+        if (!m_DebugTrophyEnabler->OnResume())
+            WriteLog(LL_Error, "Debug Trophy Enabler resume failed");
+    }
+    #endif    
     WriteLog(LL_Debug, "resuming tty redirector");
     if (m_TTYRedirector)
     {
