@@ -34,10 +34,10 @@ jobs:
       - name: Upload 6.72 loaderusb
         uses: actions/upload-artifact@v2
         with:
-          name: Miraloaderusb_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.bin
-          path: loaderusb/build/MiraloaderUsb_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.bin
+          name: Miraloader_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.bin
+          path: loaderusb/build/Miraloader_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.bin
       - name: Upload 6.72 elf
         uses: actions/upload-artifact@v2
         with:
-          name: Mirausb_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.elf
-          path: kernel/build/MiraUsb_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.elf
+          name: Mira_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.elf
+          path: kernel/build/Mira_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.elf
