@@ -458,20 +458,7 @@ void Mira::Boot::Patches::install_prerunPatches_672()
   kmem[0] = 0x01;
   kmem[1] = 0x00;
   kmem[2] = 0x00;
-  kmem[3] = 0x08;  
-// Firmware spoof sdk 07000 to 08050
-  kmem = (uint8_t *)&gKernelBase[0x027A8303];
-  kmem[0] = 0x30;
-  kmem[1] = 0x38;
-  kmem[2] = 0x30;
-  kmem[3] = 0x35;
-  kmem[4] = 0x30;
-  kmem = (uint8_t *)&gKernelBase[0x027F773E];
-  kmem[0] = 0x30;
-  kmem[1] = 0x38;
-  kmem[2] = 0x30;
-  kmem[3] = 0x35;
-  kmem[4] = 0x30; 
+  kmem[3] = 0x08;
   
 #endif
 }

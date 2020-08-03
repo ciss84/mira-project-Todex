@@ -122,7 +122,7 @@ bool PluginManager::OnLoad()
             s_Success = false;
             break;
         }
-        
+
         // Initialize emu-registry
         m_EmuRegistry = new Mira::Plugins::EmuRegistryPlugin();
         if (m_EmuRegistry == nullptr)
@@ -131,7 +131,7 @@ bool PluginManager::OnLoad()
             s_Success = false;
             break;
         }
-        
+
         // Initialize Substitute
         m_Substitute = new Mira::Plugins::Substitute();
         if (m_Substitute == nullptr)
@@ -196,7 +196,7 @@ bool PluginManager::OnLoad()
         if (!m_EmuRegistry->OnLoad())
             WriteLog(LL_Error, "could not load emulated registry.");
     }
-    
+
     if (m_Substitute)
     {
         if (!m_Substitute->OnLoad())
@@ -299,7 +299,7 @@ bool PluginManager::OnUnload()
         delete m_EmuRegistry;
         m_EmuRegistry = nullptr;
     }
-    
+
     // Delete the log server
     if (m_Logger)
     {
@@ -433,7 +433,7 @@ bool PluginManager::OnSuspend()
         if (!m_EmuRegistry->OnSuspend())
             WriteLog(LL_Error, "emuRegistry suspend failed");
     }
-    
+
     // Suspend both of the loggers (cleans up the sockets)
     if (m_Logger)
     {
@@ -526,7 +526,7 @@ bool PluginManager::OnResume()
         if (!m_EmuRegistry->OnResume())
             WriteLog(LL_Error, "emuRegistry resume failed");
     }
-    
+
     WriteLog(LL_Debug, "resuming substitute");
     if (m_Substitute)
     {

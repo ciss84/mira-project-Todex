@@ -1,7 +1,6 @@
 /*
     Implemented from: https://github.com/xvortex/ps4-hen-vtx
     Ported by: kiwidog (@kd_tech_)
-
     Bugfixes: SiSTRo (https://github.com/SiSTR0), SocraticBliss (https://github.com/SocraticBliss)
 */
 
@@ -34,7 +33,7 @@ namespace Mira
 
             static const uint8_t g_RifDebugKey[0x10];
             static const uint8_t g_FakeKeySeed[0x10];
-
+            
         public:
             FakePkgManager();
             virtual ~FakePkgManager();

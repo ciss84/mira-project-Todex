@@ -235,14 +235,14 @@
 // SceShellCore patches - use free prefix instead fake
 #define ssc_fake_to_free_patch                             0x00FD2BF1
 
-/*// SceShellCore patches - enable fakepkg
+// SceShellCore patches - enable fakepkg
 #define ssc_enable_fakepkg_patch                           0x003EFCF0
 
 // SceShellUI patches - debug patches
 #define ssu_sceSblRcMgrIsAllowDebugMenuForSettings_patch   0x0001D670
 #define ssu_sceSblRcMgrIsStoreMode_patch                   0x0001D9D0
 
-// SceShellCore patches - enable sys dynlib dlsym in all process
+/*// SceShellCore patches - enable sys dynlib dlsym in all process
 #define ssc_sys_dynlib_dlsym_patch                         0x001D895A
 
 // SceShellCore patches - enable official external HDD support Support added in 4.50
