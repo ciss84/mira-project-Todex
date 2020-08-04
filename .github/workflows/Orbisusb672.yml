@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: MiraLoader_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.bin
-          path: loaderusb/build/MiraLoader_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.bin
+          path: loaderusb/build/MiraLoaderusb_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.bin
       - name: Upload 6.72 elf
         uses: actions/upload-artifact@v2
         with:
