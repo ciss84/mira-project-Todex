@@ -17,10 +17,10 @@ jobs:
         # Install required stuff needed to build Mira
       - name: preinstall
         run: sudo apt install build-essential git clang lldb clang-tidy clang-tools cppcheck
-        # Handle loaderusb crap
+        # Handle loader crap
       - name: create loader directories
         run: cd loaderusb; make create
-      - name: clean loaderusb
+      - name: clean loader
         run: cd loaderusb; make clean
       - name: create mira directories
         run: cd kernel; make create
@@ -34,8 +34,8 @@ jobs:
       - name: Upload 6.72 loaderusb
         uses: actions/upload-artifact@v2
         with:
-          name: Miraloader_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.bin
-          path: loader/build/Miraloader_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.bin
+          name: MiraLoader_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.bin
+          path: loaderusb/build/MiraLoader_Orbis_MIRA_PLATFORM_ORBIS_BSD_672.bin
       - name: Upload 6.72 elf
         uses: actions/upload-artifact@v2
         with:
