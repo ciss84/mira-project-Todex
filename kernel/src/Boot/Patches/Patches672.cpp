@@ -313,7 +313,7 @@ void Mira::Boot::Patches::install_prerunPatches_672()
 	kmem[1] = 0x00;
 	kmem[2] = 0x00;
 	kmem[3] = 0x00;
-	
+
 	// patch sys_setuid
 	kmem = (uint8_t *)&gKernelBase[0x0010BED0]; // call    priv_check_cred; overwrite with mov eax, 0
 	kmem[0] = 0xB8; // mov eax, 0
@@ -335,7 +335,12 @@ void Mira::Boot::Patches::install_prerunPatches_672()
 	kmem[2] = 0x01;
 	kmem[3] = 0x00;
 	kmem[4] = 0x00;
-		      	
+	// Patch a function called by dynlib_dlsym
+	kmem = (uint8_t *)&gKernelBase[0x0041A2D0];
+	kmem[0] = 0x31; // xor eax, eax
+	kmem[1] = 0xC0;
+	kmem[2] = 0xC3;	// ret
+			      	
 	// Firmware spoof sdk reverse 01007206 to 01000008
   kmem = (uint8_t *)&gKernelBase[0x0044C79B];
   kmem[0] = 0x01;
