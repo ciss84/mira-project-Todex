@@ -52,7 +52,8 @@
 #define kdlsym_addr_deci_tty_write                                     0x004A97E0
 #define kdlsym_addr_destroy_dev                                        0x003BDCB0
 #define kdlsym_addr_dmem_start_app_process                             0x0007CC90
-#define kdlsym_addr_dynlib_do_dlsym                                    0x00417960
+//#define kdlsym_addr_dynlib_do_dlsym                                    0x00417960
+#define kdlsym_addr_dynlib_do_dlsym                                    0x00017A20
 #define kdlsym_addr_dynlib_find_obj_by_handle                          0x00418AC0
 #define kdlsym_addr_eventhandler_register                              0x00402E80
 #define kdlsym_addr_eventhandler_deregister                            0x00403220
