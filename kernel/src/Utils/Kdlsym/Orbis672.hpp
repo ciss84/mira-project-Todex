@@ -197,6 +197,10 @@
 #define kdlsym_addr_setidt                                             0x000A1B90
 #define kdlsym_addr__sceSblAuthMgrSmLoadSelfBlock                      0x00660AF0
 #define kdlsym_addr__sceSblAuthMgrSmLoadSelfSegment                    0x006606A0
+#define kdlsym_addr_pmap_PROTECT	                         0x00050F50
+#define kdlsym_addr_pmap_PROTECT_P	                       0x00050F9C
+#define kdlsym_addr_pmap_STORE		                         0x01BB7880
+#define kdlsym_addr_DT_HASH_SEGMENT		                     0x00D09FB0
 
 // Kernel Hooks
 #define kdlsym_addr_printf_hook                                        0x01A9FE98
@@ -221,6 +225,7 @@
 #define ssc_sceKernelIsGenuineCEX_patchB                   0x00835642
 #define ssc_sceKernelIsGenuineCEX_patchC                   0x00880492
 #define ssc_sceKernelIsGenuineCEX_patchD                   0x00A12B92
+#define ssc_sceKernelIsGenuineCEX_patchF                   0x0033943E
 
 // SceShellCore patches - call nidf_libSceDipsw
 #define ssc_nidf_libSceDipsw_patchA                        0x00189630

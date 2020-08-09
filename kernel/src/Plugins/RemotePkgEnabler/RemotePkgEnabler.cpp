@@ -72,7 +72,6 @@ bool RemotePkgEnabler::OnLoad()
 	// Free the entries we got returned
 	delete [] s_Entries;
 	s_Entries = nullptr;
-    #if MIRA_PLATFORM <= MIRA_PLATFORM_ORBIS_BSD_505
 
 	s_Ret = Utilities::ProcessReadWriteMemory(s_Process, (void*)(s_TextStart + ssc_sceKernelIsGenuineCEX_patchF), 5, (void*)"\x31\xC0\xFF\xC0\x90", nullptr, true);
 	if (s_Ret < 0)
@@ -80,7 +79,19 @@ bool RemotePkgEnabler::OnLoad()
 			WriteLog(LL_Error, "ssc_sceKernelIsGenuineCEX_patchF");
 			return false;
 	}
-    #endif
+	  s_Ret = Utilities::ProcessReadWriteMemory(s_Process, (void*)(s_TextStart + kdlsym_addr_pmap_PROTECT_P), 1, (void*) "\xEB", nullptr, true);
+    if (s_Ret < 0)
+    {
+    WriteLog(LL_Error, "kdlsym_addr_pmap_PROTECT_P");
+    return false;
+    }    
+    s_Ret = Utilities::ProcessReadWriteMemory(s_Process, (void*)(s_TextStart + kdlsym_addr_pmap_PROTECT_P), 1, (void*) "\x75", nullptr, true);
+    if (s_Ret < 0)
+    {
+    WriteLog(LL_Error, "kdlsym_addr_pmap_PROTECT_P");
+    return false;
+    }
+    
 	return true;
 }
 
